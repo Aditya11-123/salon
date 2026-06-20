@@ -5,6 +5,10 @@ export const metadata: Metadata = {
   title: 'Salon App',
   description: 'AI-powered consultation platform for professional salons',
   manifest: '/manifest.json',
+  icons: {
+    icon: '/icon.png',
+    apple: '/icon.png',
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
