@@ -6,6 +6,8 @@ export interface Profile {
   role: Role;
   name: string;
   email: string;
+  store_name?: string;
+  phone?: string;
   created_at: string;
 }
 

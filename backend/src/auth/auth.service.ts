@@ -1,6 +1,7 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { SupabaseService } from '../supabase/supabase.service';
+import { SignupDto } from './auth.controller';
 
 @Injectable()
 export class AuthService {
@@ -8,6 +9,33 @@ export class AuthService {
     private readonly supabase: SupabaseService,
     private readonly jwt: JwtService,
   ) {}
+
+  async signup(dto: SignupDto) {
+    const { data, error } = await this.supabase.db.auth.admin.createUser({
+      email: dto.email,
+      password: dto.password,
+      email_confirm: true,
+    });
+
+    if (error) throw new ConflictException(error.message);
+
+    const { data: profile, error: profileError } = await this.supabase.db
+      .from('profiles')
+      .insert({ 
+        id: data.user.id, 
+        name: dto.name, 
+        email: dto.email, 
+        role: 'admin',
+        store_name: dto.store_name,
+        phone: dto.phone
+      })
+      .select()
+      .single();
+      
+    if (profileError) throw new ConflictException(profileError.message);
+
+    return profile;
+  }
 
   async login(email: string, password: string) {
     const { data, error } = await this.supabase.db.auth.signInWithPassword({

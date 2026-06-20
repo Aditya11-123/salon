@@ -8,67 +8,63 @@ import { api } from '@/lib/api';
 import { saveAuth, isAuthenticated } from '@/lib/auth';
 import { supabase } from '@/lib/supabase';
 
-export default function LoginPage() {
+export default function SignupPage() {
   const router = useRouter();
+  const [name, setName] = useState('');
+  const [storeName, setStoreName] = useState('');
+  const [phone, setPhone] = useState('+91 ');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [demoLoading, setDemoLoading] = useState(false);
   const [error, setError] = useState('');
 
   useEffect(() => {
     if (isAuthenticated()) router.replace('/home');
   }, [router]);
 
-  async function handleLogin(e: React.FormEvent) {
+  async function handleSignup(e: React.FormEvent) {
     e.preventDefault();
-    if (!email.trim() || !password.trim()) return;
+    if (!name.trim() || !email.trim() || !password.trim()) return;
     setError('');
     setLoading(true);
     try {
-      // Use native Supabase Auth
-      const { data, error } = await supabase.auth.signInWithPassword({
+      // 1. Create the Admin user in the backend
+      await api.auth.signup({
+        name: name.trim(),
+        store_name: storeName.trim() || undefined,
+        phone: phone.trim() || undefined,
+        email: email.trim(),
+        password: password
+      });
+
+      // 2. Log them in directly to get the session
+      const { data, error: loginError } = await supabase.auth.signInWithPassword({
         email: email.trim(),
         password: password
       });
       
-      if (error) throw error;
+      if (loginError) throw loginError;
       
       if (data.session && data.user) {
         // Map Supabase user to our internal Profile format
         const profile = {
           id: data.user.id,
-          role: data.user.user_metadata.role || 'barber',
-          name: data.user.user_metadata.full_name || data.user.email?.split('@')[0] || 'Barber',
+          role: 'admin' as const,
+          name: name.trim(),
           email: data.user.email || '',
+          store_name: storeName.trim(),
+          phone: phone.trim(),
           created_at: data.user.created_at
         };
         saveAuth(data.session.access_token, profile);
         router.replace('/home');
       }
     } catch (err: any) {
-      // Fallback for "Demo Mode" if Supabase isn't hooked up yet
-      if (err.message.includes('placeholder')) {
-         enterDemo();
-      } else {
-         setError(err.message || 'Invalid credentials. Please try again.');
-      }
+      setError(err.message || 'Registration failed. Please try again.');
     } finally {
       setLoading(false);
     }
-  }
-
-  function enterDemo() {
-    setDemoLoading(true);
-    saveAuth('demo-token-not-real', {
-      id: 'demo-barber-001',
-      role: 'barber',
-      name: 'Demo Barber',
-      email: 'demo@salon.com',
-      created_at: new Date().toISOString(),
-    });
-    setTimeout(() => router.replace('/home'), 500);
   }
 
   return (
@@ -98,24 +94,24 @@ export default function LoginPage() {
       <div style={{
         position: 'relative', zIndex: 10,
         width: '100%',
-        padding: '0 24px',
+        padding: '40px 24px',
         maxWidth: '440px',
         margin: '0 auto',
       }}>
 
         {/* Headline */}
-        <div className="fu" style={{ marginBottom: '40px', textAlign: 'center' }}>
+        <div className="fu" style={{ marginBottom: '32px', textAlign: 'center' }}>
           <h1 style={{
-            fontSize: '48px',
+            fontSize: '36px',
             fontFamily: 'var(--font-serif)',
             color: 'var(--white)',
             marginBottom: '8px',
             fontWeight: 400
           }}>
-            Staff Portal
+            Salon Owner Registration
           </h1>
-          <p style={{ fontSize: '13px', color: 'var(--text-secondary)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-            Authorized Personnel Only
+          <p style={{ fontSize: '13px', color: 'var(--text-secondary)', letterSpacing: '0.05em' }}>
+            Create your admin portal
           </p>
         </div>
 
@@ -123,23 +119,54 @@ export default function LoginPage() {
         <div className="fu1" style={{
           background: 'rgba(0,0,0,0.6)',
           border: '1px solid rgba(255,255,255,0.1)',
-          padding: '40px 24px',
+          padding: '32px 24px',
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
+          borderRadius: 'var(--r-lg)'
         }}>
           
-          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '24px' }}>
-            <button
-              onClick={enterDemo}
-              disabled={demoLoading}
-              className="btn btn-secondary"
-              style={{ padding: '6px 12px', fontSize: '10px' }}
-            >
-              {demoLoading ? <Loader2 size={12} className="spin" /> : 'DEMO MODE'}
-            </button>
-          </div>
+          <form onSubmit={handleSignup} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div>
+              <label className="label">Full Name</label>
+              <input
+                type="text"
+                className="input"
+                value={name}
+                onChange={e => setName(e.target.value)}
+                placeholder="John Doe"
+                required
+                style={{ background: 'rgba(255,255,255,0.03)' }}
+              />
+            </div>
 
-          <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <div>
+              <label className="label">Store Name</label>
+              <input
+                type="text"
+                className="input"
+                value={storeName}
+                onChange={e => setStoreName(e.target.value)}
+                placeholder="The Golden Scissors"
+                style={{ background: 'rgba(255,255,255,0.03)' }}
+              />
+            </div>
+
+            <div>
+              <label className="label">Phone Number</label>
+              <input
+                type="tel"
+                className="input"
+                value={phone}
+                onChange={e => {
+                  let val = e.target.value;
+                  if (!val.startsWith('+91 ')) val = '+91 ' + val.replace(/^\+91 ?/, '');
+                  setPhone(val);
+                }}
+                placeholder="+1 (555) 000-0000"
+                style={{ background: 'rgba(255,255,255,0.03)' }}
+              />
+            </div>
+
             <div>
               <label className="label">Email Address</label>
               <input
@@ -147,7 +174,7 @@ export default function LoginPage() {
                 className="input"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
-                placeholder="barber@salon.com"
+                placeholder="owner@salon.com"
                 required
                 style={{ background: 'rgba(255,255,255,0.03)' }}
               />
@@ -161,7 +188,8 @@ export default function LoginPage() {
                   className="input"
                   value={password}
                   onChange={e => setPassword(e.target.value)}
-                  placeholder="••••••••"
+                  placeholder="Min 6 characters"
+                  minLength={6}
                   required
                   style={{ background: 'rgba(255,255,255,0.03)' }}
                 />
@@ -190,15 +218,15 @@ export default function LoginPage() {
               style={{ marginTop: '12px', height: '52px' }}
             >
               {loading ? <Loader2 size={18} className="spin" /> : (
-                <>Sign In <ArrowRight size={16} /></>
+                <>Create Account <ArrowRight size={16} /></>
               )}
             </button>
           </form>
 
           <div style={{ marginTop: '24px', textAlign: 'center', fontSize: '13px', color: 'var(--text-muted)' }}>
-            Don&apos;t have an account?{' '}
-            <Link href="/signup" style={{ color: 'var(--purple-light)', textDecoration: 'none', fontWeight: 600 }}>
-              Sign up
+            Already have an account?{' '}
+            <Link href="/login" style={{ color: 'var(--purple-light)', textDecoration: 'none', fontWeight: 600 }}>
+              Sign in
             </Link>
           </div>
         </div>
