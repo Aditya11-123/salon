@@ -45,6 +45,7 @@ export default function LoginPage() {
           created_at: data.user.created_at
         };
         saveAuth(data.session.access_token, profile);
+        localStorage.setItem('show_welcome', 'true');
         router.replace('/home');
       }
     } catch (err: any) {
@@ -68,6 +69,7 @@ export default function LoginPage() {
       email: 'demo@salon.com',
       created_at: new Date().toISOString(),
     });
+    localStorage.setItem('show_welcome', 'true');
     setTimeout(() => router.replace('/home'), 500);
   }
 

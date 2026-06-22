@@ -65,6 +65,7 @@ export default function SignupPage() {
           created_at: data.user.created_at
         };
         saveAuth(data.session.access_token, profile);
+        localStorage.setItem('show_welcome', 'true');
         router.replace('/home');
       }
     } catch (err: any) {

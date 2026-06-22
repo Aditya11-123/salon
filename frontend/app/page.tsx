@@ -2,48 +2,14 @@
 
 import Link from 'next/link';
 import { ArrowRight, Scissors, Sparkles, Droplets, SprayCan, Beaker, CheckCircle } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import LandingNav from '@/components/layout/LandingNav';
 
 export default function LandingPage() {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
     <div style={{ backgroundColor: '#000000', color: '#ffffff', minHeight: '100vh', fontFamily: 'var(--font-sans)', overflowX: 'hidden' }}>
       
-      {/* Navbar */}
-      <nav className={`landing-nav ${scrolled ? 'scrolled' : ''}`}>
-        <div className="landing-nav-container">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '40px' }}>
-            <div style={{ fontSize: '14px', letterSpacing: '0.05em', color: 'rgba(255,255,255,0.7)' }}>
-              PHONE: 505-707-5050
-            </div>
-          </div>
-
-          <div className="landing-nav-links">
-            <a href="#services" style={{ color: '#fff', textDecoration: 'none' }}>Services</a>
-            <a href="#team" style={{ color: '#fff', textDecoration: 'none' }}>Team</a>
-            <Link href="/contact" style={{ color: '#fff', textDecoration: 'none' }}>Contact</Link>
-          </div>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-            <Link href="/login" style={{
-              fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.15em',
-              color: '#fff', textDecoration: 'none', borderBottom: '1px solid rgba(255,255,255,0.3)',
-              paddingBottom: '2px', transition: 'border-color 0.3s ease'
-            }}>
-              Staff Login
-            </Link>
-          </div>
-        </div>
-      </nav>
+      {/* Shared Navbar */}
+      <LandingNav activePage="home" />
 
       {/* Hero Section */}
       <header className="hero-header">
