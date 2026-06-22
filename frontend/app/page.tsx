@@ -46,7 +46,7 @@ export default function LandingPage() {
             color: '#fff', textDecoration: 'none', borderBottom: '1px solid rgba(255,255,255,0.3)',
             paddingBottom: '2px', transition: 'border-color 0.3s ease'
           }}>
-            Staff Login
+            Admin Login
           </Link>
         </div>
       </nav>
