@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Eye, EyeOff, Loader2, ArrowRight, AlertCircle, X } from 'lucide-react';
+import { Eye, EyeOff, Loader2, ArrowRight, AlertCircle, X, ArrowLeft } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { api } from '@/lib/api';
 import { saveAuth, isAuthenticated } from '@/lib/auth';
@@ -115,6 +115,24 @@ export default function LoginPage() {
 
       <div style={{ position: 'absolute', inset: 0, background: 'var(--bg-panel)', zIndex: 1 }} />
 
+      <Link href="/" style={{
+        position: 'absolute',
+        top: '24px',
+        left: '24px',
+        zIndex: 50,
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+        color: 'rgba(255, 255, 255, 0.7)',
+        textDecoration: 'none',
+        fontSize: '14px',
+        fontWeight: 500,
+        transition: 'color 0.2s',
+      }}>
+        <ArrowLeft size={18} />
+        Back to Home
+      </Link>
+
       <div style={{
         position: 'relative', zIndex: 10,
         width: '100%',
@@ -174,12 +192,7 @@ export default function LoginPage() {
             </div>
 
             <div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <label className="label">Password</label>
-                <Link href="/forgot-password" style={{ fontSize: '12px', color: 'var(--purple-light)', textDecoration: 'none', marginBottom: '8px', display: 'block' }}>
-                  Forgot Password?
-                </Link>
-              </div>
+              <label className="label">Password</label>
               <div style={{ position: 'relative' }}>
                 <input
                   type={show ? 'text' : 'password'}
@@ -203,6 +216,11 @@ export default function LoginPage() {
                 >
                   {show ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '8px' }}>
+                <Link href="/forgot-password" style={{ fontSize: '12px', color: 'var(--purple-light)', textDecoration: 'none' }}>
+                  Forgot Password?
+                </Link>
               </div>
             </div>
 

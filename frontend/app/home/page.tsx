@@ -12,7 +12,7 @@ import {
 import { getUser, isAuthenticated, clearAuth } from '@/lib/auth';
 import { setConsultState, clearConsultState } from '@/lib/store';
 import { Gender } from '@/lib/types';
-import BottomNav from '@/components/layout/BottomNav';
+
 import LandingNav from '@/components/layout/LandingNav';
 
 export default function HomePage() {
@@ -61,57 +61,13 @@ export default function HomePage() {
     document.getElementById('gender-select-section')?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  /* Profile dropdown + dashboard button rendered as the navbar's right slot */
-  const navRightContent = (
-    <>
-      <Link href="/admin" className="nav-dashboard-link">
-        <button className="home-btn-outline" style={{ padding: '8px 16px', fontSize: '11px', border: '1px solid #c59d5f', color: '#c59d5f' }}>
-          Staff Dashboard <LayoutGrid size={12} />
-        </button>
-      </Link>
-
-      {/* Profile Dropdown Menu */}
-      <div className="nav-profile-menu" onClick={() => setMenuOpen(!menuOpen)}>
-        <div className="nav-avatar-circle" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, color: '#c59d5f', fontSize: '13px' }}>
-          {userName.charAt(0).toUpperCase()}
-        </div>
-        <span className="nav-profile-name">
-          {userName}
-          <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ transition: 'transform 0.2s', transform: menuOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}>
-            <path d="M1 1l4 4 4-4" />
-          </svg>
-        </span>
-
-        <AnimatePresence>
-          {menuOpen && (
-            <motion.div 
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              className="nav-profile-dropdown"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div style={{ padding: '8px 16px', borderBottom: '1px solid rgba(255,255,255,0.05)', marginBottom: '4px' }}>
-                <div style={{ fontSize: '12px', fontWeight: 600, color: '#ffffff' }}>{userName}</div>
-                <div style={{ fontSize: '10px', color: '#c59d5f' }}>{userRole}</div>
-              </div>
-              <button onClick={handleSignOut} className="nav-profile-dropdown-item" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <LogOut size={13} /> Sign Out
-              </button>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </>
-  );
-
   return (
     <div className="home-page-shell">
       <div className="home-bg-overlay" />
       <div className="home-gradient-overlay" />
 
       {/* Shared Navbar */}
-      <LandingNav activePage="home" rightSlot={navRightContent} />
+      <LandingNav activePage="home" />
 
       {/* Main Container */}
       <main className="home-main">
@@ -289,11 +245,6 @@ export default function HomePage() {
           </div>
         )}
       </AnimatePresence>
-
-      {/* Responsive Bottom Navigation for Mobile viewports */}
-      <div className="bottom-nav-wrapper">
-        <BottomNav active="home" />
-      </div>
     </div>
   );
 }

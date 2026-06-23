@@ -7,8 +7,7 @@ import { Users, UserPlus, TrendingUp, CalendarDays, Loader2 } from 'lucide-react
 import { isAuthenticated, getUser } from '@/lib/auth';
 import { api } from '@/lib/api';
 import { AnalyticsOverview } from '@/lib/types';
-import TopBar from '@/components/layout/TopBar';
-import BottomNav from '@/components/layout/BottomNav';
+import LandingNav from '@/components/layout/LandingNav';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 
 export default function AdminDashboardPage() {
@@ -16,11 +15,11 @@ export default function AdminDashboardPage() {
   const [data, setData] = useState<AnalyticsOverview | null>(null);
   const [chartData, setChartData] = useState<{ name: string; count: number }[]>([]);
   const [loading, setLoading] = useState(true);
-  const user = typeof window !== 'undefined' ? getUser() : null;
 
   useEffect(() => {
     if (!isAuthenticated()) { router.replace('/login'); return; }
-    if (user?.role !== 'admin') { router.replace('/home'); return; }
+    const profile = getUser();
+    if (profile?.role !== 'admin') { router.replace('/home'); return; }
 
     Promise.all([
       api.analytics.overview(),
@@ -29,7 +28,7 @@ export default function AdminDashboardPage() {
       setData(overview);
       setChartData(services.slice(0, 5)); // Top 5
     }).finally(() => setLoading(false));
-  }, [router, user?.role]);
+  }, [router]);
 
   if (loading || !data) {
     return (
@@ -48,9 +47,9 @@ export default function AdminDashboardPage() {
 
   return (
     <div className="shell">
-      <TopBar title="Admin Dashboard" />
+      <LandingNav activePage="admin" />
 
-      <div className="content">
+      <div className="content" style={{ paddingTop: '100px' }}>
         <div className="fu" style={{ marginBottom: '24px' }}>
           <div className="eyebrow">Overview</div>
           <h2 style={{ fontSize: '26px' }}>Salon Performance</h2>
@@ -112,8 +111,6 @@ export default function AdminDashboardPage() {
           </Link>
         </div>
       </div>
-
-      <BottomNav active="admin" />
     </div>
   );
 }
