@@ -6,8 +6,7 @@ import { Calendar, Clock, Loader2, User } from 'lucide-react';
 import { api } from '@/lib/api';
 import { isAuthenticated } from '@/lib/auth';
 import { Session } from '@/lib/types';
-import TopBar from '@/components/layout/TopBar';
-import BottomNav from '@/components/layout/BottomNav';
+import LandingNav from '@/components/layout/LandingNav';
 
 export default function HistoryPage() {
   const router = useRouter();
@@ -34,9 +33,10 @@ export default function HistoryPage() {
 
   return (
     <div className="shell">
-      <TopBar title="Consultation History" />
+      {/* Shared Navbar */}
+      <LandingNav activePage="history" />
 
-      <div className="content">
+      <div className="content" style={{ paddingTop: '100px' }}>
         <div className="fu" style={{ marginBottom: '24px' }}>
           <div className="eyebrow">Records</div>
           <h2 style={{ fontSize: '26px' }}>Past Sessions</h2>
@@ -99,8 +99,6 @@ export default function HistoryPage() {
           </div>
         )}
       </div>
-
-      <BottomNav active="history" />
     </div>
   );
 }

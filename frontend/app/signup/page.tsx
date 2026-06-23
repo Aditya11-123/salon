@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Eye, EyeOff, Loader2, ArrowRight } from 'lucide-react';
+import { Eye, EyeOff, Loader2, ArrowRight, ArrowLeft } from 'lucide-react';
 import { api } from '@/lib/api';
 import { saveAuth, isAuthenticated } from '@/lib/auth';
 import { supabase } from '@/lib/supabase';
@@ -98,6 +98,24 @@ export default function SignupPage() {
       }} />
 
       <div style={{ position: 'absolute', inset: 0, background: 'var(--bg-panel)', zIndex: 1 }} />
+
+      <Link href="/" style={{
+        position: 'absolute',
+        top: '24px',
+        left: '24px',
+        zIndex: 50,
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+        color: 'rgba(255, 255, 255, 0.7)',
+        textDecoration: 'none',
+        fontSize: '14px',
+        fontWeight: 500,
+        transition: 'color 0.2s',
+      }}>
+        <ArrowLeft size={18} />
+        Back to Home
+      </Link>
 
       <div style={{
         position: 'relative', zIndex: 10,
