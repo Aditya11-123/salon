@@ -13,15 +13,15 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     const token = localStorage.getItem('admin_token');
     
     if (!token && pathname !== '/login') {
-      router.push('/login');
+      window.location.href = '/login';
     } else {
       setIsAuthenticated(true);
     }
-  }, [pathname, router]);
+  }, [pathname]);
 
   const handleLogout = () => {
     localStorage.removeItem('admin_token');
-    router.push('/login');
+    window.location.href = '/login';
   };
 
   // Wait for auth check

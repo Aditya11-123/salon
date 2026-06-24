@@ -20,9 +20,9 @@ interface EditPlanModalProps {
 }
 
 export default function EditPlanModal({ isOpen, onClose, onSuccess, plan }: EditPlanModalProps) {
-  const [price, setPrice] = useState(0);
-  const [barberLimit, setBarberLimit] = useState(0);
-  const [aiLimit, setAiLimit] = useState(0);
+  const [price, setPrice] = useState<number | string>('');
+  const [barberLimit, setBarberLimit] = useState<number | string>('');
+  const [aiLimit, setAiLimit] = useState<number | string>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
 
@@ -78,13 +78,15 @@ export default function EditPlanModal({ isOpen, onClose, onSuccess, plan }: Edit
           {error && <div className="p-3 bg-red-50 text-red-700 text-sm rounded-md">{error}</div>}
           
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Monthly Price ($)</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Monthly Price (₹)</label>
             <input 
               required
               type="number" 
               min="0"
+              placeholder="0"
               value={price}
-              onChange={(e) => setPrice(Number(e.target.value))}
+              onKeyDown={(e) => { if (['e', 'E', '+', '-'].includes(e.key)) e.preventDefault(); }}
+              onChange={(e) => setPrice(e.target.value === '' ? '' : Number(e.target.value))}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
             />
           </div>
@@ -95,10 +97,11 @@ export default function EditPlanModal({ isOpen, onClose, onSuccess, plan }: Edit
               required
               type="number" 
               min="1"
+              placeholder="0"
               value={barberLimit}
-              onChange={(e) => setBarberLimit(Number(e.target.value))}
+              onKeyDown={(e) => { if (['e', 'E', '+', '-'].includes(e.key)) e.preventDefault(); }}
+              onChange={(e) => setBarberLimit(e.target.value === '' ? '' : Number(e.target.value))}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-              placeholder="Use 9999 for unlimited"
             />
             <p className="text-xs text-gray-500 mt-1">Use 9999 for unlimited barbers</p>
           </div>
@@ -109,10 +112,11 @@ export default function EditPlanModal({ isOpen, onClose, onSuccess, plan }: Edit
               required
               type="number" 
               min="0"
+              placeholder="0"
               value={aiLimit}
-              onChange={(e) => setAiLimit(Number(e.target.value))}
+              onKeyDown={(e) => { if (['e', 'E', '+', '-'].includes(e.key)) e.preventDefault(); }}
+              onChange={(e) => setAiLimit(e.target.value === '' ? '' : Number(e.target.value))}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-              placeholder="Monthly API requests limit"
             />
           </div>
 
