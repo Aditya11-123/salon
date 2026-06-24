@@ -38,7 +38,7 @@ export class DashboardService {
 
     // 4. API Cost (Calculate from APIUsage tokens * rate)
     const apiUsages = await this.prisma.aPIUsage.findMany();
-    const totalTokens = apiUsages.reduce((sum, usage) => sum + usage.tokensUsed, 0);
+    const totalTokens = apiUsages.reduce((sum: number, usage: any) => sum + usage.tokensUsed, 0);
     // Let's assume a rate of $0.002 per 1000 tokens for demonstration
     const apiCost = (totalTokens / 1000) * 0.002;
 
@@ -47,7 +47,7 @@ export class DashboardService {
       where: { status: 'ACTIVE', subscriptionId: { not: null } },
       include: { subscription: true }
     });
-    const monthlyRevenue = activeSubscribedSalons.reduce((sum, salon) => {
+    const monthlyRevenue = activeSubscribedSalons.reduce((sum: number, salon: any) => {
       return sum + (salon.subscription?.monthlyPrice || 0);
     }, 0);
 
