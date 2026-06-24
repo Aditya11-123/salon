@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { MoreVertical, Edit2, Ban, Trash2, Eye, CheckCircle2, Clock, ShieldAlert, ChevronLeft, ChevronRight, ChevronDown, Mail, Phone } from 'lucide-react';
+import { Edit2, Eye, CheckCircle2, Clock, ShieldAlert, ChevronLeft, ChevronRight, ChevronDown, Mail, Phone } from 'lucide-react';
 import { SalonFormData } from './EditSalonModal';
 
 interface Salon {
@@ -22,7 +22,6 @@ interface SalonsTableProps {
   onEdit: (salon: Salon) => void;
   onSuspendToggle: (salon: Salon) => void;
   onDelete: (salon: Salon) => void;
-  // Pagination Props
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
@@ -43,6 +42,7 @@ export default function SalonsTable({
   onItemsPerPageChange,
   totalItems
 }: SalonsTableProps) {
+  
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'ACTIVE':

@@ -237,7 +237,7 @@ export default function Dashboard() {
       </div>
 
       {/* Customers List Section */}
-      <div className="bg-white rounded-xl shadow-[0_1px_2px_rgba(0,0,0,0.1)] overflow-hidden mt-6 flex flex-col h-[600px] border border-gray-100">
+      <div className="bg-white rounded-xl shadow-[0_1px_2px_rgba(0,0,0,0.1)] overflow-hidden mt-6 flex flex-col h-[500px] lg:h-[600px] border border-gray-100">
         <div className="p-4 border-b border-gray-100 flex flex-col md:flex-row justify-between items-center bg-white gap-4 z-10 shadow-sm">
           <h2 className="text-lg font-bold text-gray-900 flex-shrink-0">
             {selectedFilter === "ALL" ? "All Salons" : `${selectedFilter.charAt(0) + selectedFilter.slice(1).toLowerCase()} Salons`}

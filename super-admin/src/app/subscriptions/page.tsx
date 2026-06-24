@@ -109,19 +109,19 @@ export default function Subscriptions() {
   if (loading) return <div className="p-8 text-center text-gray-500">Loading plans...</div>;
 
   return (
-    <div className="p-8 max-w-7xl mx-auto">
-      <div className="flex justify-between items-center mb-10">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 md:mb-10">
         <div>
-          <h1 className="text-4xl font-bold text-gray-900 tracking-tight">Subscription Plans</h1>
-          <p className="text-gray-500 mt-2">Manage platform pricing and tier limits.</p>
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 tracking-tight">Subscription Plans</h1>
+          <p className="text-sm sm:text-base text-gray-500 mt-1 sm:mt-2">Manage platform pricing and tier limits.</p>
         </div>
-        <div className="space-x-4">
+        <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
           {plans.length === 0 && (
-            <button onClick={seedPlans} className="cursor-pointer bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">
+            <button onClick={seedPlans} className="w-full sm:w-auto cursor-pointer bg-[#1877f2] text-white px-4 py-2.5 rounded-full hover:bg-[#166fe5] transition font-semibold text-sm shadow-sm">
               Seed Default Plans
             </button>
           )}
-          <button onClick={() => setIsAddingModalOpen(true)} className="cursor-pointer bg-gray-900 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition flex items-center">
+          <button onClick={() => setIsAddingModalOpen(true)} className="w-full sm:w-auto cursor-pointer bg-gray-900 text-white px-4 py-2.5 rounded-full hover:bg-gray-800 transition flex justify-center items-center font-semibold text-sm shadow-sm">
             <Plus className="w-4 h-4 mr-2" /> Add Custom Plan
           </button>
         </div>
@@ -134,14 +134,14 @@ export default function Subscriptions() {
       )}
 
       {/* Billing Toggle */}
-      <div className="flex justify-center mb-12">
-        <div className="bg-gray-100 p-1 rounded-full flex items-center">
+      <div className="flex justify-center mb-8 sm:mb-12">
+        <div className="bg-white border border-gray-200 p-1 rounded-full flex items-center shadow-sm max-w-full overflow-x-auto no-scrollbar">
           {['monthly', 'quarterly', 'annual'].map((cycle) => (
             <button
               key={cycle}
               onClick={() => setBillingCycle(cycle as any)}
-              className={`cursor-pointer capitalize px-6 py-2 rounded-full text-sm font-medium transition-all ${
-                billingCycle === cycle ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500 hover:text-gray-700'
+              className={`cursor-pointer capitalize px-4 sm:px-6 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all whitespace-nowrap ${
+                billingCycle === cycle ? 'bg-[#1877f2] shadow-sm text-white' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
               }`}
             >
               {cycle}
@@ -162,9 +162,9 @@ export default function Subscriptions() {
                 <div className="flex justify-between items-start">
                   <h2 className="text-2xl font-bold text-gray-900">{plan.name}</h2>
                   {!isEditing && (
-                    <div className="flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <button onClick={() => handleEditClick(plan)} className="cursor-pointer text-gray-400 hover:text-indigo-600"><Edit2 className="w-4 h-4" /></button>
-                      <button onClick={() => handleDelete(plan.id)} className="cursor-pointer text-gray-400 hover:text-red-600"><Trash2 className="w-4 h-4" /></button>
+                    <div className="flex space-x-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+                      <button onClick={() => handleEditClick(plan)} className="cursor-pointer p-1.5 bg-gray-100 rounded-lg text-gray-500 hover:bg-blue-50 hover:text-[#1877f2]"><Edit2 className="w-4 h-4" /></button>
+                      <button onClick={() => handleDelete(plan.id)} className="cursor-pointer p-1.5 bg-gray-100 rounded-lg text-gray-500 hover:bg-red-50 hover:text-red-600"><Trash2 className="w-4 h-4" /></button>
                     </div>
                   )}
                 </div>
@@ -178,15 +178,15 @@ export default function Subscriptions() {
                   <div className="mt-4 space-y-3">
                     <div>
                       <label className="text-xs text-gray-500 font-semibold uppercase tracking-wider">Monthly ₹</label>
-                      <input type="number" placeholder="0" value={editForm.monthlyPrice ?? ''} onKeyDown={(e) => { if (['e', 'E', '+', '-'].includes(e.key)) e.preventDefault(); }} onChange={e => setEditForm({...editForm, monthlyPrice: e.target.value === '' ? ('' as any) : Number(e.target.value)})} className="w-full mt-1 p-2 border border-gray-300 rounded focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition" />
+                      <input type="number" placeholder="0" value={editForm.monthlyPrice ?? ''} onKeyDown={(e) => { if (['e', 'E', '+', '-'].includes(e.key)) e.preventDefault(); }} onChange={e => setEditForm({...editForm, monthlyPrice: e.target.value === '' ? ('' as any) : Number(e.target.value)})} className="w-full mt-1 p-2 border border-gray-300 rounded focus:ring-2 focus:ring-[#1877f2] focus:border-[#1877f2] outline-none transition" />
                     </div>
                     <div>
                       <label className="text-xs text-gray-500 font-semibold uppercase tracking-wider">Quarterly ₹</label>
-                      <input type="number" placeholder="0" value={editForm.quarterlyPrice ?? ''} onKeyDown={(e) => { if (['e', 'E', '+', '-'].includes(e.key)) e.preventDefault(); }} onChange={e => setEditForm({...editForm, quarterlyPrice: e.target.value === '' ? ('' as any) : Number(e.target.value)})} className="w-full mt-1 p-2 border border-gray-300 rounded focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition" />
+                      <input type="number" placeholder="0" value={editForm.quarterlyPrice ?? ''} onKeyDown={(e) => { if (['e', 'E', '+', '-'].includes(e.key)) e.preventDefault(); }} onChange={e => setEditForm({...editForm, quarterlyPrice: e.target.value === '' ? ('' as any) : Number(e.target.value)})} className="w-full mt-1 p-2 border border-gray-300 rounded focus:ring-2 focus:ring-[#1877f2] focus:border-[#1877f2] outline-none transition" />
                     </div>
                     <div>
                       <label className="text-xs text-gray-500 font-semibold uppercase tracking-wider">Annual ₹</label>
-                      <input type="number" placeholder="0" value={editForm.annualPrice ?? ''} onKeyDown={(e) => { if (['e', 'E', '+', '-'].includes(e.key)) e.preventDefault(); }} onChange={e => setEditForm({...editForm, annualPrice: e.target.value === '' ? ('' as any) : Number(e.target.value)})} className="w-full mt-1 p-2 border border-gray-300 rounded focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition" />
+                      <input type="number" placeholder="0" value={editForm.annualPrice ?? ''} onKeyDown={(e) => { if (['e', 'E', '+', '-'].includes(e.key)) e.preventDefault(); }} onChange={e => setEditForm({...editForm, annualPrice: e.target.value === '' ? ('' as any) : Number(e.target.value)})} className="w-full mt-1 p-2 border border-gray-300 rounded focus:ring-2 focus:ring-[#1877f2] focus:border-[#1877f2] outline-none transition" />
                     </div>
                   </div>
                 )}
@@ -226,11 +226,11 @@ export default function Subscriptions() {
 
               {/* Actions */}
               {isEditing && (
-                <div className="p-4 bg-gray-50 flex space-x-2 border-t border-gray-100">
-                  <button onClick={() => handleSave(plan.id)} className="cursor-pointer flex-1 bg-indigo-600 text-white py-2 rounded-lg font-medium flex justify-center items-center hover:bg-indigo-700 transition">
+                <div className="p-4 bg-gray-50 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 border-t border-gray-100">
+                  <button onClick={() => handleSave(plan.id)} className="cursor-pointer flex-1 bg-[#1877f2] text-white py-2 rounded-lg font-medium flex justify-center items-center hover:bg-[#166fe5] transition shadow-sm">
                     <Save className="w-4 h-4 mr-2" /> Save
                   </button>
-                  <button onClick={handleCancelEdit} className="cursor-pointer flex-1 bg-gray-200 text-gray-800 py-2 rounded-lg font-medium flex justify-center items-center hover:bg-gray-300 transition">
+                  <button onClick={handleCancelEdit} className="cursor-pointer flex-1 bg-white border border-gray-200 text-gray-800 py-2 rounded-lg font-medium flex justify-center items-center hover:bg-gray-50 transition shadow-sm">
                     <X className="w-4 h-4 mr-2" /> Cancel
                   </button>
                 </div>
@@ -243,45 +243,45 @@ export default function Subscriptions() {
       {/* Add Plan Modal */}
       {isAddingModalOpen && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-xl font-bold text-gray-900">Add Custom Plan</h3>
-              <button onClick={() => setIsAddingModalOpen(false)} className="cursor-pointer text-gray-400 hover:text-gray-600">
-                <X className="w-6 h-6" />
+          <div className="bg-white rounded-2xl shadow-xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6 sticky top-0 bg-white border-b border-gray-100 flex justify-between items-center z-10">
+              <h3 className="text-xl font-bold text-gray-900 tracking-tight">Add Custom Plan</h3>
+              <button onClick={() => setIsAddingModalOpen(false)} className="cursor-pointer p-2 rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition">
+                <X className="w-5 h-5" />
               </button>
             </div>
-            <form onSubmit={handleCreatePlan} className="space-y-4">
+            <form onSubmit={handleCreatePlan} className="p-6 space-y-5">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Plan Name</label>
-                <input required type="text" value={newPlanForm.name} onChange={e => setNewPlanForm({...newPlanForm, name: e.target.value})} className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="e.g. VIP Plan" />
+                <label className="block text-sm font-semibold text-gray-700 mb-1.5">Plan Name</label>
+                <input required type="text" value={newPlanForm.name} onChange={e => setNewPlanForm({...newPlanForm, name: e.target.value})} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#1877f2] focus:border-[#1877f2] outline-none" placeholder="e.g. VIP Plan" />
               </div>
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Monthly ₹</label>
-                  <input required type="number" min="0" placeholder="0" value={newPlanForm.monthlyPrice} onKeyDown={(e) => { if (['e', 'E', '+', '-'].includes(e.key)) e.preventDefault(); }} onChange={e => setNewPlanForm({...newPlanForm, monthlyPrice: e.target.value === '' ? '' : Number(e.target.value)})} className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" />
+                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">Monthly ₹</label>
+                  <input required type="number" min="0" placeholder="0" value={newPlanForm.monthlyPrice} onKeyDown={(e) => { if (['e', 'E', '+', '-'].includes(e.key)) e.preventDefault(); }} onChange={e => setNewPlanForm({...newPlanForm, monthlyPrice: e.target.value === '' ? '' : Number(e.target.value)})} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#1877f2] focus:border-[#1877f2] outline-none" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Quarterly ₹</label>
-                  <input required type="number" min="0" placeholder="0" value={newPlanForm.quarterlyPrice} onKeyDown={(e) => { if (['e', 'E', '+', '-'].includes(e.key)) e.preventDefault(); }} onChange={e => setNewPlanForm({...newPlanForm, quarterlyPrice: e.target.value === '' ? '' : Number(e.target.value)})} className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" />
+                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">Quarterly ₹</label>
+                  <input required type="number" min="0" placeholder="0" value={newPlanForm.quarterlyPrice} onKeyDown={(e) => { if (['e', 'E', '+', '-'].includes(e.key)) e.preventDefault(); }} onChange={e => setNewPlanForm({...newPlanForm, quarterlyPrice: e.target.value === '' ? '' : Number(e.target.value)})} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#1877f2] focus:border-[#1877f2] outline-none" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Annual ₹</label>
-                  <input required type="number" min="0" placeholder="0" value={newPlanForm.annualPrice} onKeyDown={(e) => { if (['e', 'E', '+', '-'].includes(e.key)) e.preventDefault(); }} onChange={e => setNewPlanForm({...newPlanForm, annualPrice: e.target.value === '' ? '' : Number(e.target.value)})} className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Barber Limit</label>
-                  <input required type="number" min="0" placeholder="0" value={newPlanForm.barberLimit} onKeyDown={(e) => { if (['e', 'E', '+', '-'].includes(e.key)) e.preventDefault(); }} onChange={e => setNewPlanForm({...newPlanForm, barberLimit: e.target.value === '' ? '' : Number(e.target.value)})} className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">AI Consultations</label>
-                  <input required type="number" min="0" placeholder="0" value={newPlanForm.aiLimit} onKeyDown={(e) => { if (['e', 'E', '+', '-'].includes(e.key)) e.preventDefault(); }} onChange={e => setNewPlanForm({...newPlanForm, aiLimit: e.target.value === '' ? '' : Number(e.target.value)})} className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" />
+                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">Annual ₹</label>
+                  <input required type="number" min="0" placeholder="0" value={newPlanForm.annualPrice} onKeyDown={(e) => { if (['e', 'E', '+', '-'].includes(e.key)) e.preventDefault(); }} onChange={e => setNewPlanForm({...newPlanForm, annualPrice: e.target.value === '' ? '' : Number(e.target.value)})} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#1877f2] focus:border-[#1877f2] outline-none" />
                 </div>
               </div>
-              <div className="mt-8 pt-4 border-t border-gray-100 flex justify-end space-x-3">
-                <button type="button" onClick={() => setIsAddingModalOpen(false)} className="cursor-pointer px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition">Cancel</button>
-                <button type="submit" className="cursor-pointer px-4 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition">Create Plan</button>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">Barber Limit</label>
+                  <input required type="number" min="0" placeholder="0" value={newPlanForm.barberLimit} onKeyDown={(e) => { if (['e', 'E', '+', '-'].includes(e.key)) e.preventDefault(); }} onChange={e => setNewPlanForm({...newPlanForm, barberLimit: e.target.value === '' ? '' : Number(e.target.value)})} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#1877f2] focus:border-[#1877f2] outline-none" />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">AI Consultations</label>
+                  <input required type="number" min="0" placeholder="0" value={newPlanForm.aiLimit} onKeyDown={(e) => { if (['e', 'E', '+', '-'].includes(e.key)) e.preventDefault(); }} onChange={e => setNewPlanForm({...newPlanForm, aiLimit: e.target.value === '' ? '' : Number(e.target.value)})} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#1877f2] focus:border-[#1877f2] outline-none" />
+                </div>
+              </div>
+              <div className="mt-8 pt-5 border-t border-gray-100 flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-3">
+                <button type="button" onClick={() => setIsAddingModalOpen(false)} className="cursor-pointer w-full sm:w-auto px-5 py-2.5 text-gray-700 bg-white border border-gray-300 rounded-full hover:bg-gray-50 transition font-semibold">Cancel</button>
+                <button type="submit" className="cursor-pointer w-full sm:w-auto px-5 py-2.5 text-white bg-[#1877f2] rounded-full hover:bg-[#166fe5] shadow-sm transition font-semibold">Create Plan</button>
               </div>
             </form>
           </div>
