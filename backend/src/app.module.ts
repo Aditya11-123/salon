@@ -12,6 +12,7 @@ import { SalonsModule } from './salons/salons.module';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ReportsModule } from './reports/reports.module';
+import { PlatformSettingsModule } from './platform-settings/platform-settings.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { ReportsModule } from './reports/reports.module';
     SubscriptionsModule,
     PrismaModule,
     ReportsModule,
+    PlatformSettingsModule,
   ],
 })
 export class AppModule {}
