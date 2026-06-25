@@ -76,22 +76,22 @@ export default function EditSalonModal({
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative w-full max-w-lg transform overflow-hidden rounded-2xl bg-white text-left shadow-xl transition-all"
+            className="relative w-[95%] sm:w-full sm:max-w-lg transform overflow-hidden rounded-2xl bg-white text-left shadow-xl transition-all"
           >
-            <div className="flex items-center justify-between border-b border-gray-200 px-6 py-4">
-              <h3 className="text-xl font-semibold text-gray-900">
+            <div className="flex items-center justify-between border-b border-gray-100 px-4 sm:px-6 py-4">
+              <h3 className="text-xl font-bold text-gray-900 tracking-tight">
                 {initialData ? 'Edit Salon Profile' : 'Add New Salon'}
               </h3>
               <button
                 onClick={onClose}
-                className="rounded-full p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="rounded-full p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 transition-colors"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
             <form onSubmit={handleSubmit}>
-              <div className="space-y-4 px-6 py-6 text-sm">
+              <div className="space-y-4 px-4 sm:px-6 py-5 text-sm">
                 <div>
                   <label htmlFor="name" className="block font-medium text-gray-700">Salon Name</label>
                   <input
@@ -100,7 +100,7 @@ export default function EditSalonModal({
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    className="mt-1.5 block w-full rounded-lg border border-gray-300 px-4 py-2.5 shadow-sm focus:border-[#1877f2] focus:outline-none focus:ring-1 focus:ring-[#1877f2]"
                     required
                   />
                 </div>
@@ -114,7 +114,7 @@ export default function EditSalonModal({
                       name="ownerName"
                       value={formData.ownerName}
                       onChange={handleChange}
-                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                      className="mt-1.5 block w-full rounded-lg border border-gray-300 px-4 py-2.5 shadow-sm focus:border-[#1877f2] focus:outline-none focus:ring-1 focus:ring-[#1877f2]"
                       required
                     />
                   </div>
@@ -126,7 +126,7 @@ export default function EditSalonModal({
                       name="mobile"
                       value={formData.mobile}
                       onChange={handleChange}
-                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                      className="mt-1.5 block w-full rounded-lg border border-gray-300 px-4 py-2.5 shadow-sm focus:border-[#1877f2] focus:outline-none focus:ring-1 focus:ring-[#1877f2]"
                       required
                     />
                   </div>
@@ -140,7 +140,7 @@ export default function EditSalonModal({
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    className="mt-1.5 block w-full rounded-lg border border-gray-300 px-4 py-2.5 shadow-sm focus:border-[#1877f2] focus:outline-none focus:ring-1 focus:ring-[#1877f2]"
                     required
                   />
                 </div>
@@ -152,7 +152,7 @@ export default function EditSalonModal({
                     name="subscriptionId"
                     value={formData.subscriptionId}
                     onChange={handleChange}
-                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    className="mt-1.5 block w-full rounded-lg border border-gray-300 px-4 py-2.5 shadow-sm focus:border-[#1877f2] focus:outline-none focus:ring-1 focus:ring-[#1877f2] bg-white"
                     required
                   >
                     <option value="" disabled>Select a plan...</option>
@@ -163,17 +163,17 @@ export default function EditSalonModal({
                 </div>
               </div>
 
-              <div className="bg-gray-50 px-6 py-4 sm:flex sm:flex-row-reverse">
+              <div className="bg-[#f8fafc] px-4 sm:px-6 py-4 sm:flex sm:flex-row-reverse rounded-b-2xl border-t border-gray-100">
                 <button
                   type="submit"
-                  className="inline-flex w-full items-center justify-center rounded-lg border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm transition-colors"
+                  className="inline-flex w-full items-center justify-center rounded-full border border-transparent bg-[#1877f2] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#166fe5] focus:outline-none sm:ml-3 sm:w-auto transition-colors"
                 >
                   <Save className="mr-2 h-4 w-4" />
                   Save Changes
                 </button>
                 <button
                   type="button"
-                  className="mt-3 inline-flex w-full justify-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm transition-colors"
+                  className="mt-3 inline-flex w-full justify-center rounded-full border border-gray-300 bg-white px-5 py-2.5 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none sm:mt-0 sm:w-auto transition-colors"
                   onClick={onClose}
                 >
                   Cancel

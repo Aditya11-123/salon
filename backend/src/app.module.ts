@@ -12,6 +12,8 @@ import { SalonsModule } from './salons/salons.module';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { AiEngineModule } from './admin/ai-engine/ai-engine.module';
+import { ReportsModule } from './reports/reports.module';
+import { PlatformSettingsModule } from './platform-settings/platform-settings.module';
 
 @Module({
   imports: [
@@ -28,6 +30,8 @@ import { AiEngineModule } from './admin/ai-engine/ai-engine.module';
     SubscriptionsModule,
     PrismaModule,
     AiEngineModule,
+    ReportsModule,
+    PlatformSettingsModule,
   ],
 })
 export class AppModule {}

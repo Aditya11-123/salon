@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { MoreVertical, Edit2, Ban, Trash2, Eye, CheckCircle2, Clock, ShieldAlert, ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
+import { Edit2, Eye, CheckCircle2, Clock, ShieldAlert, ChevronLeft, ChevronRight, ChevronDown, Mail, Phone } from 'lucide-react';
 import { SalonFormData } from './EditSalonModal';
 
 interface Salon {
@@ -22,7 +22,6 @@ interface SalonsTableProps {
   onEdit: (salon: Salon) => void;
   onSuspendToggle: (salon: Salon) => void;
   onDelete: (salon: Salon) => void;
-  // Pagination Props
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
@@ -43,19 +42,7 @@ export default function SalonsTable({
   onItemsPerPageChange,
   totalItems
 }: SalonsTableProps) {
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-
-  const toggleDropdown = (id: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    setOpenDropdown(openDropdown === id ? null : id);
-  };
-
-  React.useEffect(() => {
-    const handleClickOutside = () => setOpenDropdown(null);
-    document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
-  }, []);
-
+  
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'ACTIVE':
@@ -113,7 +100,6 @@ export default function SalonsTable({
   const startItem = totalItems === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1;
   const endItem = Math.min(currentPage * itemsPerPage, totalItems);
 
-  // Generate page numbers for pagination
   const getPageNumbers = () => {
     const pages = [];
     let start = Math.max(1, currentPage - 1);
@@ -130,7 +116,76 @@ export default function SalonsTable({
 
   return (
     <div className="flex flex-col w-full h-full bg-white">
-      <div className="overflow-x-auto">
+      {/* Mobile Card View (hidden on lg and up) */}
+      <div className="lg:hidden flex flex-col gap-4 p-4 bg-gray-50/50">
+        {data.map((salon) => (
+          <div key={salon.id} className="bg-white rounded-xl border border-gray-200 shadow-sm p-4 relative flex flex-col gap-4">
+            
+            {/* Header: Avatar, Name, Status */}
+            <div className="flex items-start justify-between">
+              <div className="flex items-center gap-3">
+                <div className={`h-12 w-12 flex-shrink-0 rounded-full flex items-center justify-center font-bold text-lg ${getAvatarColor(salon.name)}`}>
+                  {salon.name.charAt(0).toUpperCase()}
+                </div>
+                <div>
+                  <Link href={`/salons/${salon.id}`} className="font-bold text-base text-gray-900 hover:text-[#1877f2] transition-colors leading-tight">
+                    {salon.name}
+                  </Link>
+                  <div className="text-xs text-gray-500 mt-0.5">ID: {salon.userId}</div>
+                </div>
+              </div>
+              <div className="flex flex-col items-end gap-2">
+                {getStatusBadge(salon.status)}
+                {getPlanBadge(salon.subscriptionId)}
+              </div>
+            </div>
+
+            {/* Details Grid */}
+            <div className="grid grid-cols-2 gap-y-3 gap-x-2 text-sm bg-gray-50/50 rounded-lg p-3 border border-gray-100">
+              <div>
+                <span className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">Owner</span>
+                <span className="font-semibold text-gray-700">{salon.ownerName}</span>
+              </div>
+              <div>
+                <span className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">Joined</span>
+                <span className="font-medium text-gray-700">
+                  {new Date(salon.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                </span>
+              </div>
+              <div className="col-span-2">
+                <span className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">Contact</span>
+                <div className="flex flex-col gap-1 mt-1">
+                  <span className="font-medium text-gray-700 flex items-center gap-1.5"><Mail className="w-3.5 h-3.5 text-gray-400" />{salon.email}</span>
+                  <span className="font-medium text-gray-700 flex items-center gap-1.5"><Phone className="w-3.5 h-3.5 text-gray-400" />{salon.mobile}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex items-center justify-end gap-2 pt-2 border-t border-gray-100 relative">
+              <Link href={`/salons/${salon.id}`} className="flex-1">
+                <button className="w-full h-9 rounded-lg border border-gray-200 flex items-center justify-center text-gray-600 hover:text-[#1877f2] hover:bg-blue-50 transition-colors font-medium text-sm gap-1.5">
+                  <Eye className="h-4 w-4" /> View
+                </button>
+              </Link>
+              <button 
+                onClick={() => onEdit(salon)}
+                className="flex-1 h-9 rounded-lg border border-gray-200 flex items-center justify-center text-gray-600 hover:text-[#1877f2] hover:bg-blue-50 transition-colors font-medium text-sm gap-1.5"
+              >
+                <Edit2 className="h-4 w-4" /> Edit
+              </button>
+            </div>
+          </div>
+        ))}
+        {data.length === 0 && (
+          <div className="p-8 text-center bg-white rounded-xl border border-gray-200 text-gray-500">
+            No salons found matching your filters.
+          </div>
+        )}
+      </div>
+
+      {/* Desktop Table View (hidden on mobile and tablet) */}
+      <div className="hidden lg:block w-full overflow-x-auto pb-24">
         <table className="min-w-full text-left border-collapse">
           <thead>
             <tr>
@@ -165,8 +220,8 @@ export default function SalonsTable({
                   {salon.ownerName}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-[14px] text-gray-900 font-medium leading-tight">{salon.email}</div>
-                  <div className="text-[13px] text-gray-500 mt-0.5">{salon.mobile}</div>
+                  <div className="text-[14px] text-gray-900 font-medium leading-tight flex items-center gap-1.5"><Mail className="w-3.5 h-3.5 text-gray-400"/> {salon.email}</div>
+                  <div className="text-[13px] text-gray-500 mt-1 flex items-center gap-1.5"><Phone className="w-3.5 h-3.5 text-gray-400"/> {salon.mobile}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {getPlanBadge(salon.subscriptionId)}
@@ -194,32 +249,6 @@ export default function SalonsTable({
                     >
                       <Edit2 className="h-4 w-4" />
                     </button>
-                    
-                    <button
-                      onClick={(e) => toggleDropdown(salon.id, e)}
-                      className="h-8 w-8 rounded border border-gray-200 flex items-center justify-center text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors relative"
-                    >
-                      <MoreVertical className="h-4 w-4" />
-                    </button>
-
-                    {openDropdown === salon.id && (
-                      <div className="absolute right-0 top-10 z-10 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                        <button
-                          onClick={(e) => { e.stopPropagation(); setOpenDropdown(null); onSuspendToggle(salon); }}
-                          className="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
-                        >
-                          <Ban className={`mr-3 h-4 w-4 ${salon.status === 'ACTIVE' ? 'text-amber-500' : 'text-emerald-500'}`} />
-                          {salon.status === 'ACTIVE' ? 'Suspend Salon' : 'Reactivate Salon'}
-                        </button>
-                        <button
-                          onClick={(e) => { e.stopPropagation(); setOpenDropdown(null); onDelete(salon); }}
-                          className="flex w-full items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50"
-                        >
-                          <Trash2 className="mr-3 h-4 w-4 text-red-500" />
-                          Delete Salon
-                        </button>
-                      </div>
-                    )}
                   </div>
                 </td>
               </tr>
@@ -236,13 +265,13 @@ export default function SalonsTable({
         </table>
       </div>
 
-      {/* Pagination Footer */}
-      <div className="border-t border-gray-100 px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="text-[13px] text-gray-500 font-medium">
-          Showing {startItem} to {endItem} of {totalItems} salons
+      {/* Pagination Footer (Responsive Grid) */}
+      <div className="border-t border-gray-100 px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4 bg-white">
+        <div className="text-[13px] text-gray-500 font-medium w-full sm:w-auto text-center sm:text-left">
+          Showing {startItem} to {endItem} of {totalItems}
         </div>
-        <div className="flex flex-col sm:flex-row items-center gap-4">
-          <div className="flex items-center gap-1">
+        <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto justify-center sm:justify-end">
+          <div className="flex items-center justify-center gap-1">
             <button 
               onClick={() => onPageChange(currentPage - 1)}
               disabled={currentPage === 1}
@@ -252,10 +281,10 @@ export default function SalonsTable({
             </button>
             
             {currentPage > 2 && totalPages > 3 && (
-              <>
+              <div className="hidden sm:flex items-center">
                 <button onClick={() => onPageChange(1)} className="h-8 w-8 rounded flex items-center justify-center text-gray-600 hover:bg-gray-100 font-medium text-sm transition-colors">1</button>
                 {currentPage > 3 && <span className="text-gray-400 px-1">...</span>}
-              </>
+              </div>
             )}
 
             {getPageNumbers().map(num => (
@@ -264,7 +293,7 @@ export default function SalonsTable({
                 onClick={() => onPageChange(num)}
                 className={`h-8 w-8 rounded flex items-center justify-center font-medium text-sm transition-colors ${
                   currentPage === num 
-                    ? 'bg-[#1877f2] text-white' 
+                    ? 'bg-[#1877f2] text-white shadow-sm' 
                     : 'text-gray-600 hover:bg-gray-100'
                 }`}
               >
@@ -273,10 +302,10 @@ export default function SalonsTable({
             ))}
 
             {currentPage < totalPages - 1 && totalPages > 3 && (
-              <>
+              <div className="hidden sm:flex items-center">
                 {currentPage < totalPages - 2 && <span className="text-gray-400 px-1">...</span>}
                 <button onClick={() => onPageChange(totalPages)} className="h-8 w-8 rounded flex items-center justify-center text-gray-600 hover:bg-gray-100 font-medium text-sm transition-colors">{totalPages}</button>
-              </>
+              </div>
             )}
 
             <button 
@@ -288,18 +317,17 @@ export default function SalonsTable({
             </button>
           </div>
           
-          <div className="relative">
+          <div className="relative w-full sm:w-auto mt-2 sm:mt-0">
             <select 
               value={itemsPerPage}
               onChange={(e) => onItemsPerPageChange(Number(e.target.value))}
-              className="appearance-none flex items-center gap-2 h-8 pl-3 pr-8 rounded border border-gray-200 text-[13px] font-medium text-gray-600 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-[#1877f2] transition-colors cursor-pointer"
+              className="w-full sm:w-auto appearance-none flex items-center gap-2 h-9 sm:h-8 pl-3 pr-8 rounded-lg border border-gray-200 text-[13px] font-medium text-gray-600 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-[#1877f2] transition-colors cursor-pointer bg-white"
             >
               <option value={5}>5 per page</option>
               <option value={10}>10 per page</option>
               <option value={20}>20 per page</option>
-              <option value={50}>50 per page</option>
             </select>
-            <ChevronDown className="h-3.5 w-3.5 text-gray-400 absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none" />
+            <ChevronDown className="h-3.5 w-3.5 text-gray-400 absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
           </div>
         </div>
       </div>

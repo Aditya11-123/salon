@@ -22,7 +22,7 @@ export default function LoginPage() {
       const res = await fetch(`${API_BASE_URL}/auth/super-admin/request-otp`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email: email.trim() }),
       });
 
       const data = await res.json();
@@ -48,7 +48,7 @@ export default function LoginPage() {
       const res = await fetch(`${API_BASE_URL}/auth/super-admin/verify-otp`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, otp }),
+        body: JSON.stringify({ email: email.trim(), otp }),
       });
 
       const data = await res.json();

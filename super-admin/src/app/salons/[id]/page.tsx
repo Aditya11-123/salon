@@ -38,18 +38,18 @@ export default function SalonDetailPage() {
   };
 
   return (
-    <div className="p-6 sm:p-10 max-w-5xl mx-auto min-h-screen bg-gray-50/50">
+    <div className="p-4 sm:p-6 lg:p-10 max-w-[1600px] mx-auto min-h-screen bg-[#f4f7fb]">
       {/* Header */}
-      <div className="mb-8">
-        <Link href="/salons" className="inline-flex items-center text-sm text-gray-500 hover:text-indigo-600 transition-colors mb-4 font-medium">
+      <div className="mb-6 sm:mb-8">
+        <Link href="/salons" className="inline-flex items-center text-sm text-gray-500 hover:text-[#1877f2] transition-colors mb-4 font-medium">
           <ArrowLeft className="w-4 h-4 mr-1" />
           Back to Salons
         </Link>
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 tracking-tight flex items-center gap-3">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight flex items-center gap-3 flex-wrap">
               {salon.name}
-              <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${salon.status === 'ACTIVE' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}`}>
+              <span className={`text-xs px-2.5 py-1 rounded-full font-bold uppercase tracking-wide ${salon.status === 'ACTIVE' ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}`}>
                 {salon.status}
               </span>
             </h1>
@@ -59,14 +59,14 @@ export default function SalonDetailPage() {
           </div>
           <button 
             onClick={() => setIsEditModalOpen(true)}
-            className="inline-flex items-center justify-center bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 transition-all shadow-sm font-medium"
+            className="w-full sm:w-auto inline-flex items-center justify-center bg-white border border-gray-200 text-gray-700 px-5 py-2.5 rounded-full hover:bg-gray-50 hover:text-[#1877f2] hover:border-blue-200 transition-all shadow-sm font-semibold text-sm"
           >
             Edit Profile
           </button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-8">
         {/* Left Column: Salon Profile Details */}
         <div className="lg:col-span-1 space-y-6">
           <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">

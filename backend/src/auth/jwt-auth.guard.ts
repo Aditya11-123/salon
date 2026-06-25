@@ -14,7 +14,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     }
     
     const token = authHeader.split(' ')[1];
-    
+
     // Verify token directly against Supabase - no local JWT secret needed
     const supabase = createClient(
       process.env.SUPABASE_URL ?? '',
@@ -25,7 +25,16 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     const { data, error } = await supabase.auth.getUser(token);
     
     if (error || !data.user) {
-      console.log('Supabase token verification failed:', error?.message);
+      console.log('Supabase token verification failed. Trying local JWT verification...');
+      
+      // Fallback to Passport's default local JWT verification
+      // This will securely verify the token signature using JWT_SECRET
+      try {
+        const canAct = await super.canActivate(context);
+        if (canAct) return true;
+      } catch (passportErr) {
+        throw new UnauthorizedException('Invalid token');
+      }
       throw new UnauthorizedException('Invalid token');
     }
     
