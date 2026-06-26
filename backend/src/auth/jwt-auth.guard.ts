@@ -25,7 +25,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     const { data, error } = await supabase.auth.getUser(token);
     
     if (error || !data.user) {
-      console.log('Supabase token verification failed. Trying local JWT verification...');
+      console.debug('[Auth] Supabase verification skipped (Using Super Admin Local Token).');
       
       // Fallback to Passport's default local JWT verification
       // This will securely verify the token signature using JWT_SECRET

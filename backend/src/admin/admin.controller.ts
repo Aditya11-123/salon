@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Delete, Body, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Body, Param, UseGuards, Req } from '@nestjs/common';
 import { IsEmail, IsString, MinLength, IsIn } from 'class-validator';
 import { AdminService } from './admin.service';
 
@@ -20,11 +20,19 @@ export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
   @Get('users')
-  listUsers() { return this.adminService.listUsers(); }
+  listUsers(@Req() req: any) { return this.adminService.listUsers(req.user.sub); }
 
   @Post('users')
-  createUser(@Body() dto: CreateUserDto) { return this.adminService.createUser(dto); }
+  createUser(@Req() req: any, @Body() dto: CreateUserDto) { return this.adminService.createUser(req.user.sub, dto); }
 
   @Delete('users/:id')
   deleteUser(@Param('id') id: string) { return this.adminService.deleteUser(id); }
+
+  @Get('salon')
+  getSalon(@Req() req: any) { return this.adminService.getSalonDetails(req.user.sub); }
+
+  @Post('branches')
+  addBranch(@Req() req: any, @Body() body: { name: string, address?: string }) { 
+    return this.adminService.addBranch(req.user.sub, body); 
+  }
 }

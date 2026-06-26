@@ -37,6 +37,7 @@ export class AuthService {
       
     if (profileError) throw new ConflictException(profileError.message);
 
+    let createdSalonId: string | null = null;
     try {
       // 3. Create Salon (Store)
       const salon = await this.prisma.salon.create({
@@ -51,6 +52,7 @@ export class AuthService {
           status: 'ACTIVE',
         }
       });
+      createdSalonId = salon.id;
 
       // 4. Create Branch
       const branch = await this.prisma.branch.create({
@@ -84,8 +86,7 @@ export class AuthService {
           full_name: dto.staff_name || 'Staff',
           role: 'barber',
           phone: dto.staff_phone,
-          // Since branch linking in Supabase profiles might need a branch_id column:
-          // branch_id: branch.id // Assuming it exists or will be added later
+          salon_id: createdSalonId
         });
       }
     }

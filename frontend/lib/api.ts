@@ -110,5 +110,7 @@ export const api = {
     createUser: (data: { name: string; email: string; password: string; role: string }) =>
       request<import('./types').Profile>('/admin/users', { method: 'POST', body: JSON.stringify(data) }),
     deleteUser: (id: string) => request(`/admin/users/${id}`, { method: 'DELETE' }),
+    getSalonAndBranches: () => request<any>('/admin/salon'),
+    createBranch: (data: { name: string; address?: string }) => request<any>('/admin/branches', { method: 'POST', body: JSON.stringify(data) }),
   },
 };

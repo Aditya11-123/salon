@@ -109,6 +109,15 @@ export default function AdminDashboardPage() {
             </div>
             <ChevronRight size={16} color="var(--text-muted)" />
           </Link>
+          <Link href="/admin/branches" className="panel panel-interactive" style={{ padding: '18px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--bg-input)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-primary)' }}>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l2-1.14"/><path d="M16.5 9.4 7.55 4.24"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg>
+              </div>
+              <span style={{ fontWeight: 600, fontSize: '14px' }}>Manage Branches</span>
+            </div>
+            <ChevronRight size={16} color="var(--text-muted)" />
+          </Link>
         </div>
       </div>
     </div>

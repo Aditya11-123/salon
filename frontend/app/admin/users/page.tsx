@@ -7,7 +7,6 @@ import { isAuthenticated, getUser } from '@/lib/auth';
 import { api } from '@/lib/api';
 import { Profile } from '@/lib/types';
 import TopBar from '@/components/layout/TopBar';
-import BottomNav from '@/components/layout/BottomNav';
 
 export default function UsersPage() {
   const router = useRouter();
@@ -165,7 +164,6 @@ export default function UsersPage() {
         )}
       </div>
 
-      <BottomNav active="admin" />
     </div>
   );
 }

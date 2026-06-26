@@ -7,7 +7,6 @@ import { isAuthenticated, getUser } from '@/lib/auth';
 import { api } from '@/lib/api';
 import { Client } from '@/lib/types';
 import TopBar from '@/components/layout/TopBar';
-import BottomNav from '@/components/layout/BottomNav';
 
 export default function AdminClientsPage() {
   const router = useRouter();
@@ -108,7 +107,6 @@ export default function AdminClientsPage() {
         )}
       </div>
 
-      <BottomNav active="admin" />
     </div>
   );
 }

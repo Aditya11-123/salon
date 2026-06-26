@@ -213,7 +213,7 @@ export default function LandingPage() {
       }}
     >
       {/* Shared Navbar */}
-      <LandingNav activePage="landing" />
+      <LandingNav activePage="home" />
 
       {/* Hero Section */}
       <header className="hero-header">
