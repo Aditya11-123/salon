@@ -155,8 +155,8 @@ export default function SalonsTable({
               <div className="col-span-2">
                 <span className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">Contact</span>
                 <div className="flex flex-col gap-1 mt-1">
-                  <span className="font-medium text-gray-700 flex items-center gap-1.5"><Mail className="w-3.5 h-3.5 text-gray-400" />{salon.email}</span>
-                  <span className="font-medium text-gray-700 flex items-center gap-1.5"><Phone className="w-3.5 h-3.5 text-gray-400" />{salon.mobile}</span>
+                  <span className="font-medium text-gray-700 flex items-start gap-1.5 break-all"><Mail className="w-3.5 h-3.5 flex-shrink-0 text-gray-400 mt-0.5" />{salon.email}</span>
+                  <span className="font-medium text-gray-700 flex items-center gap-1.5"><Phone className="w-3.5 h-3.5 flex-shrink-0 text-gray-400" />{salon.mobile}</span>
                 </div>
               </div>
             </div>
@@ -185,69 +185,76 @@ export default function SalonsTable({
       </div>
 
       {/* Desktop Table View (hidden on mobile and tablet) */}
-      <div className="hidden lg:block w-full overflow-x-auto pb-24">
-        <table className="min-w-full text-left border-collapse">
+      <div className="hidden lg:block w-full pb-24">
+        <table className="min-w-full text-left border-collapse table-fixed w-full">
           <thead>
             <tr>
-              <th scope="col" className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Salon Info</th>
-              <th scope="col" className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Owner</th>
-              <th scope="col" className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Contact</th>
-              <th scope="col" className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Plan</th>
-              <th scope="col" className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Status</th>
-              <th scope="col" className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Joined Date</th>
-              <th scope="col" className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">Actions</th>
+              <th scope="col" className="w-[22%] px-3 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider">Salon Info</th>
+              <th scope="col" className="w-[15%] px-3 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider">Owner</th>
+              <th scope="col" className="w-[20%] px-3 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider">Contact</th>
+              <th scope="col" className="w-[10%] px-3 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider">Plan</th>
+              <th scope="col" className="w-[10%] px-3 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider">Status</th>
+              <th scope="col" className="w-[13%] px-3 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider">Joined Date</th>
+              <th scope="col" className="w-[10%] px-3 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100 border-t border-gray-100">
             {data.map((salon) => (
               <tr key={salon.id} className="hover:bg-gray-50/50 transition-colors group">
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex items-center gap-4">
-                    <div className={`h-10 w-10 flex-shrink-0 rounded-full flex items-center justify-center font-bold text-sm ${getAvatarColor(salon.name)}`}>
+                <td className="px-3 py-3 align-top">
+                  <div className="flex items-start gap-3">
+                    <div className={`h-10 w-10 flex-shrink-0 rounded-full flex items-center justify-center font-bold text-sm mt-0.5 ${getAvatarColor(salon.name)}`}>
                       {salon.name.charAt(0).toUpperCase()}
                     </div>
-                    <div>
-                      <div className="font-bold text-[15px] text-gray-900 leading-tight">
-                        <Link href={`/salons/${salon.id}`} className="hover:text-[#1877f2] transition-colors">
+                    <div className="min-w-0 flex-1">
+                      <div className="font-bold text-[14px] text-gray-900 leading-tight truncate">
+                        <Link href={`/salons/${salon.id}`} className="hover:text-[#1877f2] transition-colors" title={salon.name}>
                           {salon.name}
                         </Link>
                       </div>
-                      <div className="text-xs text-gray-400 mt-0.5">{salon.userId}</div>
+                      <div className="text-[11px] text-gray-400 mt-0.5 truncate" title={salon.userId}>{salon.userId}</div>
                     </div>
                   </div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-[14px] text-gray-700 font-medium">
+                <td className="px-3 py-3 align-top text-[13px] text-gray-700 font-medium break-words">
                   {salon.ownerName}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-[14px] text-gray-900 font-medium leading-tight flex items-center gap-1.5"><Mail className="w-3.5 h-3.5 text-gray-400"/> {salon.email}</div>
-                  <div className="text-[13px] text-gray-500 mt-1 flex items-center gap-1.5"><Phone className="w-3.5 h-3.5 text-gray-400"/> {salon.mobile}</div>
+                <td className="px-3 py-3 align-top">
+                  <div className="text-[13px] text-gray-900 font-medium leading-tight flex items-start gap-1.5 break-all">
+                    <Mail className="w-3.5 h-3.5 flex-shrink-0 text-gray-400 mt-0.5"/> 
+                    <span className="line-clamp-2" title={salon.email}>{salon.email}</span>
+                  </div>
+                  <div className="text-[12px] text-gray-500 mt-1.5 flex items-center gap-1.5">
+                    <Phone className="w-3.5 h-3.5 flex-shrink-0 text-gray-400"/> 
+                    {salon.mobile}
+                  </div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
+                <td className="px-3 py-3 align-top">
                   {getPlanBadge(salon.subscriptionId)}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
+                <td className="px-3 py-3 align-top">
                   {getStatusBadge(salon.status)}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-[14px] text-gray-700 font-medium">
+                <td className="px-3 py-3 align-top text-[13px] text-gray-700 font-medium whitespace-nowrap">
                   {new Date(salon.createdAt).toLocaleDateString('en-US', {
                     month: 'short',
                     day: 'numeric',
                     year: 'numeric'
                   })}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-right">
-                  <div className="flex items-center justify-end gap-2 relative">
+                <td className="px-3 py-3 align-top text-right">
+                  <div className="flex items-center justify-end gap-1.5 relative">
                     <Link href={`/salons/${salon.id}`}>
-                      <button className="h-8 w-8 rounded border border-gray-200 flex items-center justify-center text-gray-400 hover:text-[#1877f2] hover:border-blue-200 hover:bg-blue-50 transition-colors">
-                        <Eye className="h-4 w-4" />
+                      <button className="h-7 w-7 rounded border border-gray-200 flex items-center justify-center text-gray-400 hover:text-[#1877f2] hover:border-blue-200 hover:bg-blue-50 transition-colors" title="View">
+                        <Eye className="h-3.5 w-3.5" />
                       </button>
                     </Link>
                     <button 
                       onClick={() => onEdit(salon)}
-                      className="h-8 w-8 rounded border border-gray-200 flex items-center justify-center text-gray-400 hover:text-[#1877f2] hover:border-blue-200 hover:bg-blue-50 transition-colors"
+                      className="h-7 w-7 rounded border border-gray-200 flex items-center justify-center text-gray-400 hover:text-[#1877f2] hover:border-blue-200 hover:bg-blue-50 transition-colors"
+                      title="Edit"
                     >
-                      <Edit2 className="h-4 w-4" />
+                      <Edit2 className="h-3.5 w-3.5" />
                     </button>
                   </div>
                 </td>
@@ -256,7 +263,7 @@ export default function SalonsTable({
             
             {data.length === 0 && (
               <tr>
-                <td colSpan={7} className="px-6 py-12 text-center text-gray-500">
+                <td colSpan={7} className="px-3 py-12 text-center text-gray-500">
                   No salons found matching your filters.
                 </td>
               </tr>
