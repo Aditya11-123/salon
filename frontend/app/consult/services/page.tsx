@@ -43,7 +43,7 @@ export default function ServicesPage() {
   useEffect(() => {
     if (!isAuthenticated()) { router.replace('/login'); return; }
     const state = getConsultState();
-    if (!state.gender) { router.replace('/home'); return; }
+    if (!state.gender) { router.replace('/consult'); return; }
     setSelected(state.selectedServiceIds || []);
 
     api.services.list(state.gender)

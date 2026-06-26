@@ -9,7 +9,7 @@ import { isAuthenticated, getUser, clearAuth } from '@/lib/auth';
 
 interface LandingNavProps {
   /** Which page is currently active — used to highlight the correct nav link */
-  activePage?: 'home' | 'services' | 'team' | 'contact' | 'history' | 'admin';
+  activePage?: 'landing' | 'home' | 'consult' | 'services' | 'team' | 'contact' | 'history' | 'admin';
   /** Optional right-side slot for page-specific actions (profile dropdown, login, etc.) */
   rightSlot?: React.ReactNode;
 }
@@ -107,7 +107,7 @@ export default function LandingNav({ activePage, rightSlot }: LandingNavProps) {
     <nav className={`landing-nav ${scrolled ? 'scrolled' : ''}`}>
       <div className="landing-nav-container">
         {/* Left: Brand logo + name */}
-        <Link href={isLoggedIn ? "/home" : "/"} className="landing-nav-left">
+        <Link href="/" className="landing-nav-left">
           <div className="landing-nav-logo-icon">
             <Scissors size={16} />
           </div>
@@ -119,7 +119,7 @@ export default function LandingNav({ activePage, rightSlot }: LandingNavProps) {
           {isLoggedIn ? (
              <>
                <Link href="/" style={linkStyle('landing')}>Home</Link>
-               <Link href="/home" style={linkStyle('home')}>Consult</Link>
+               <Link href="/consult" style={linkStyle('consult')}>Consult</Link>
                <Link href="/history" style={linkStyle('history')}>History</Link>
                <Link href="/team" style={linkStyle('team')}>Team</Link>
                {userRole === 'admin' && (
@@ -170,7 +170,7 @@ export default function LandingNav({ activePage, rightSlot }: LandingNavProps) {
           {isLoggedIn ? (
             <>
               <Link href="/" onClick={() => setMobileMenuOpen(false)} className="landing-mobile-menu-link">Home</Link>
-              <Link href="/home" onClick={() => setMobileMenuOpen(false)} className="landing-mobile-menu-link">Consult</Link>
+              <Link href="/consult" onClick={() => setMobileMenuOpen(false)} className="landing-mobile-menu-link">Consult</Link>
               <Link href="/history" onClick={() => setMobileMenuOpen(false)} className="landing-mobile-menu-link">History</Link>
               <Link href="/team" onClick={() => setMobileMenuOpen(false)} className="landing-mobile-menu-link">Team</Link>
               {userRole === 'admin' && (

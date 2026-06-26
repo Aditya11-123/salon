@@ -24,7 +24,7 @@ export default function ClientPage() {
   useEffect(() => {
     if (!isAuthenticated()) { router.replace('/login'); return; }
     const state = getConsultState();
-    if (!state.gender) { router.replace('/home'); return; }
+    if (!state.gender) { router.replace('/consult'); return; }
   }, [router]);
 
   async function handleSearch(e: React.FormEvent) {
@@ -79,7 +79,7 @@ export default function ClientPage() {
 
   return (
     <div className="shell">
-      <TopBar title="Client Lookup" showBack backHref="/home" />
+      <TopBar title="Client Lookup" showBack backHref="/consult" />
 
       <div className="content">
         <div className="fu" style={{ marginBottom: '28px' }}>

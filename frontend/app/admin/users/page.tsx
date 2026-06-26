@@ -20,7 +20,7 @@ export default function UsersPage() {
 
   useEffect(() => {
     if (!isAuthenticated()) { router.replace('/login'); return; }
-    if (user?.role !== 'admin') { router.replace('/home'); return; }
+    if (user?.role !== 'admin') { router.replace('/consult'); return; }
     fetchUsers();
   }, [router, user?.role]);
 

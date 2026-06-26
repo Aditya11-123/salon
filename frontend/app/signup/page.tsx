@@ -44,7 +44,7 @@ export default function SignupPage() {
   const [loadingPlans, setLoadingPlans] = useState(false);
 
   useEffect(() => {
-    if (isAuthenticated()) router.replace('/home');
+    if (isAuthenticated()) router.replace('/consult');
   }, [router]);
 
   useEffect(() => {
@@ -160,7 +160,7 @@ export default function SignupPage() {
         };
         saveAuth(data.session.access_token, profile);
         localStorage.setItem('show_welcome', 'true');
-        router.replace('/home');
+        router.replace('/consult');
       }
     } catch (err: any) {
       setError(err.message || 'Registration failed. Please try again.');

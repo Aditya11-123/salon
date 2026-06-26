@@ -19,7 +19,7 @@ export default function AdminClientsPage() {
 
   useEffect(() => {
     if (!isAuthenticated()) { router.replace('/login'); return; }
-    if (user?.role !== 'admin') { router.replace('/home'); return; }
+    if (user?.role !== 'admin') { router.replace('/consult'); return; }
     fetchClients(1, '');
   }, [router, user?.role]);
 

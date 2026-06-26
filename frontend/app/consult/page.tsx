@@ -67,7 +67,7 @@ export default function HomePage() {
       <div className="home-gradient-overlay" />
 
       {/* Shared Navbar */}
-      <LandingNav activePage="home" />
+      <LandingNav activePage="consult" />
 
       {/* Main Container */}
       <main className="home-main">

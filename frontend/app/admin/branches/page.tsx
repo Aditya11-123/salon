@@ -19,7 +19,7 @@ export default function BranchesPage() {
 
   useEffect(() => {
     if (!isAuthenticated()) { router.replace('/login'); return; }
-    if (user?.role !== 'admin') { router.replace('/home'); return; }
+    if (user?.role !== 'admin') { router.replace('/consult'); return; }
     fetchSalonData();
   }, [router, user?.role]);
 

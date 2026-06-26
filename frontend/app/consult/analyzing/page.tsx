@@ -22,7 +22,7 @@ export default function AnalyzingPage() {
   useEffect(() => {
     if (!isAuthenticated()) { router.replace('/login'); return; }
     const state = getConsultState();
-    if (!state.sessionId && state.selectedServiceIds.length === 0) { router.replace('/home'); return; }
+    if (!state.sessionId && state.selectedServiceIds.length === 0) { router.replace('/consult'); return; }
 
     const interval = setInterval(() => {
       setStepIndex(i => Math.min(i + 1, STEPS.length - 1));

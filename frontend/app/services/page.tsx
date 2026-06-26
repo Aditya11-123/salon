@@ -232,7 +232,7 @@ export default function ServicesPage() {
                       <span style={{ fontSize: '11px', color: '#c59d5f', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                         {s.requires_photo ? 'Photo Required' : 'Manual Consult'}
                       </span>
-                      <Link href="/home" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '12px', color: '#ffffff', fontWeight: 500 }}>
+                      <Link href="/consult" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '12px', color: '#ffffff', fontWeight: 500 }}>
                         Start Consult <ArrowRight size={12} />
                       </Link>
                     </div>

@@ -20,7 +20,7 @@ export default function ResultsPage() {
   useEffect(() => {
     if (!isAuthenticated()) { router.replace('/login'); return; }
     const state = getConsultState();
-    if (!state.sessionId && state.selectedServiceIds.length === 0) { router.replace('/home'); return; }
+    if (!state.sessionId && state.selectedServiceIds.length === 0) { router.replace('/consult'); return; }
 
     const isDemoMode = state.sessionId === 'demo-session' || !state.sessionId;
     if (isDemoMode) {
@@ -80,7 +80,7 @@ export default function ResultsPage() {
 
   return (
     <div className="shell">
-      <TopBar title="Recommendations" showBack backHref="/home" />
+      <TopBar title="Recommendations" showBack backHref="/consult" />
 
       {grouped.length > 1 && (
         <div style={{ position: 'sticky', top: 'var(--top)', zIndex: 40, background: 'rgba(9,9,14,0.95)', borderBottom: '1px solid var(--border)', padding: '12px 22px' }}>

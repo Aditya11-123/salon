@@ -20,7 +20,7 @@ export default function CapturePage() {
   useEffect(() => {
     if (!isAuthenticated()) { router.replace('/login'); return; }
     const state = getConsultState();
-    if (!state.gender) { router.replace('/home'); return; }
+    if (!state.gender) { router.replace('/consult'); return; }
     if (state.photoPreviews && state.photoPreviews.length > 0) {
       setPreviews(state.photoPreviews);
     }

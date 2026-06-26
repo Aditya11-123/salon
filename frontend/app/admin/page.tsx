@@ -19,7 +19,7 @@ export default function AdminDashboardPage() {
   useEffect(() => {
     if (!isAuthenticated()) { router.replace('/login'); return; }
     const profile = getUser();
-    if (profile?.role !== 'admin') { router.replace('/home'); return; }
+    if (profile?.role !== 'admin') { router.replace('/consult'); return; }
 
     Promise.all([
       api.analytics.overview(),

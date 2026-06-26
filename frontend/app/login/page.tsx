@@ -21,7 +21,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (isAuthenticated()) {
-      router.replace('/home');
+      router.replace('/consult');
       return;
     }
 
@@ -64,7 +64,7 @@ export default function LoginPage() {
         saveAuth(data.session.access_token, profile);
         localStorage.setItem('show_welcome', 'true');
         saveAuth(data.session.access_token, userProfile);
-        router.replace('/home');
+        router.replace('/consult');
       }
     } catch (err: any) {
       // Fallback for "Demo Mode" if Supabase isn't hooked up yet
@@ -88,7 +88,7 @@ export default function LoginPage() {
       created_at: new Date().toISOString(),
     });
     localStorage.setItem('show_welcome', 'true');
-    setTimeout(() => router.replace('/home'), 500);
+    setTimeout(() => router.replace('/consult'), 500);
   }
 
   return (
