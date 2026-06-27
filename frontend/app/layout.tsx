@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
+import AdminNotificationWrapper from '@/components/admin/AdminNotificationWrapper';
 
 export const metadata: Metadata = {
   title: 'Salon App',
@@ -43,6 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body suppressHydrationWarning>
         {children}
+        <AdminNotificationWrapper />
       </body>
     </html>
   );

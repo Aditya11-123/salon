@@ -120,4 +120,12 @@ export const api = {
     getSalonAndBranches: () => request<any>('/admin/salon'),
     createBranch: (data: { name: string; address?: string }) => request<any>('/admin/branches', { method: 'POST', body: JSON.stringify(data) }),
   },
+
+  notifications: {
+    list: () => request<any[]>('/admin/notifications'),
+    create: (data: any) => request<any>('/admin/notifications', { method: 'POST', body: JSON.stringify(data) }),
+    markAsRead: (id: string) => request(`/admin/notifications/${id}/read`, { method: 'PATCH' }),
+    markAllAsRead: () => request('/admin/notifications/read-all', { method: 'PATCH' }),
+    delete: (id: string) => request(`/admin/notifications/${id}`, { method: 'DELETE' }),
+  },
 };
