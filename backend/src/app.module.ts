@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { ScheduleModule } from '@nestjs/schedule';
 import { AuthModule } from './auth/auth.module';
 import { ServicesModule } from './services/services.module';
 import { ClientsModule } from './clients/clients.module';
@@ -14,10 +15,12 @@ import { PrismaModule } from './prisma/prisma.module';
 import { AiEngineModule } from './admin/ai-engine/ai-engine.module';
 import { ReportsModule } from './reports/reports.module';
 import { PlatformSettingsModule } from './platform-settings/platform-settings.module';
+import { NotificationsModule } from './notifications/notifications.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    ScheduleModule.forRoot(),
     SupabaseModule,
     AuthModule,
     ServicesModule,
@@ -32,6 +35,7 @@ import { PlatformSettingsModule } from './platform-settings/platform-settings.mo
     AiEngineModule,
     ReportsModule,
     PlatformSettingsModule,
+    NotificationsModule,
   ],
 })
 export class AppModule {}

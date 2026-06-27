@@ -168,6 +168,7 @@ export default function LoginPage() {
               disabled={demoLoading}
               className="btn btn-secondary"
               style={{ padding: '6px 12px', fontSize: '10px' }}
+              suppressHydrationWarning
             >
               {demoLoading ? <Loader2 size={12} className="spin" /> : 'DEMO MODE'}
             </button>
@@ -184,6 +185,7 @@ export default function LoginPage() {
                 placeholder="barber@salon.com"
                 required
                 style={{ background: 'rgba(255,255,255,0.03)' }}
+                suppressHydrationWarning
               />
             </div>
 
@@ -198,6 +200,7 @@ export default function LoginPage() {
                   placeholder="••••••••"
                   required
                   style={{ background: 'rgba(255,255,255,0.03)' }}
+                  suppressHydrationWarning
                 />
                 <button
                   type="button"
@@ -209,6 +212,7 @@ export default function LoginPage() {
                     display: 'flex', alignItems: 'center',
                     background: 'none', border: 'none', cursor: 'pointer',
                   }}
+                  suppressHydrationWarning
                 >
                   {show ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
@@ -227,6 +231,7 @@ export default function LoginPage() {
               disabled={loading}
               className="btn btn-primary"
               style={{ marginTop: '12px', height: '52px' }}
+              suppressHydrationWarning
             >
               {loading ? <Loader2 size={18} className="spin" /> : (
                 <>Sign In <ArrowRight size={16} /></>

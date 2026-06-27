@@ -41,6 +41,9 @@ model Salon {
   aiLogs          AILog[]
   apiUsage        APIUsage?
   whiteLabel      WhiteLabelConfig?
+  notifications   Notification[]
+  clients         Client[]
+  appointments    Appointment[]
 }
 
 model Branch {
@@ -134,4 +137,59 @@ model NotificationTemplate {
   updatedAt       DateTime @updatedAt
 
   @@unique([type, channel])
+}
+
+enum NotificationType {
+  SUBSCRIPTION
+  SECURITY
+  BIRTHDAY
+  OFFER
+  RENEWAL
+  APPOINTMENT
+  SYSTEM
+  INVENTORY
+}
+
+model Notification {
+  id        String           @id @default(uuid())
+  salonId   String
+  type      NotificationType @default(SYSTEM)
+  title     String
+  message   String
+  isRead    Boolean          @default(false)
+  createdAt DateTime         @default(now())
+
+  salon     Salon            @relation(fields: [salonId], references: [id], onDelete: Cascade)
+}
+
+// ==========================================
+// 5. CLIENTS & APPOINTMENTS
+// ==========================================
+
+model Client {
+  id           String        @id @default(uuid())
+  salonId      String
+  name         String
+  email        String?
+  phone        String?
+  dateOfBirth  DateTime?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  salon        Salon         @relation(fields: [salonId], references: [id], onDelete: Cascade)
+  appointments Appointment[]
+}
+
+model Appointment {
+  id        String   @id @default(uuid())
+  salonId   String
+  clientId  String
+  date      DateTime
+  status    String   @default("PENDING") // PENDING, CONFIRMED, COMPLETED, CANCELLED
+  service   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  salon     Salon    @relation(fields: [salonId], references: [id], onDelete: Cascade)
+  client    Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
 }
